@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
+<title>Browse Photos</title>
+<body>
+	<div id="header">
+		<h1><a id="title" href="/">Photo Share</a></h1>
+	</div>
+	<div id="nav">
+		<a id="navi" href='/'>Home</a><br>
+		<a id="navi" href='/profile'>My profile</a><br>
+		<a id="navi" href='/getAllFriends'>Friendship</a><br>
+		<a id="navi" href='/getAlbums'>Manage Albums</a><br>
+		<a id="navi" href='/browseByAlbum'>Browse Albums</a><br>
+		<a id="navi" href='/browseByTag'>Browse Tags</a><br>
+		<a id="navi" href='/recommend'>Recommendations</a><br>
+		<a id="navi" href='/stars'>Stars</a><br>
+		<a id="navi" href='/login'>Login</a><br>
+		<a id="navi" href='/logout'>Logout</a><br>
+	</div>
+	
+	<div id="section">
+		{% if albumList %}
+		<h2>Select album to browse:</h2>
+
+		<form method="POST" action="/browseByAlbum">
+			<select name="album_id" style="width: 180px">
+				{% for album in albumList %}
+				<option value="{{album[0]}}">{{album[1]}}</option>
+				{% endfor %}
+				<input type="submit" name="submit" value="Browse"/>
+			</select>
+		</form>
+		{% endif %}
+
+		{% if albumInfo %}
+		<h4>Album Name: {{albumInfo[0][0]}}</h4>
+		<h4>Owner: {{albumInfo[0][1]}} {{albumInfo[0][2]}}</h4>
+		{% endif %}
+
+		{% if photos %}
+		<form method="POST" action="/getPhotoInfo">
+			
+			{% for photo in photos %}
+			<div style="float:left; width: 80%">
+			<p>
+				<input type="radio" name="photo_id" value="{{photo[1]}}"/>
+				<input type="submit" name="submit" value="Detail"/><br />
+				<img src='data:image/png;base64, {{photo[0]}}' alt="photo"  height="380"/>
+			</p>
+		</div>
+		{% endfor %}
+		
+	</form>
+	{% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<html>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<head>
+   <title>Album management</title>
+</head>
+<body>
+   <div id="header">
+      <h1><a id="title" href="/">Photo Share</a></h1>
+   </div>
+   <div id="nav">
+      <a id="navi" href='/'>Home</a><br>
+      <a id="navi" href='/profile'>My profile</a><br>
+      <a id="navi" href='/getAllFriends'>Friendship</a><br>
+      <a id="navi" href='/getAlbums'>Manage Albums</a><br>
+      <a id="navi" href='/browseByAlbum'>Browse Albums</a><br>
+      <a id="navi" href='/browseByTag'>Browse Tags</a><br>
+      <a id="navi" href='/recommend'>Recommendations</a><br>
+      <a id="navi" href='/stars'>Stars</a><br>
+      <a id="navi" href='/login'>Login</a><br>
+      <a id="navi" href='/logout'>Logout</a><br>
+   </div>
+   <div id="section">
+      <h2>All my albums</h2>
+      <p>
+         <form action="/getAlbums" method="POST">
+            {% if data %}
+            <select name="album_select" style="width: 100px">
+               {% for row in data %}
+               <option value="{{row[0]}}">{{row[1]}}</option>
+               {% endfor %}
+               <input type="submit" name="submit" value="Browse"/>
+               <input type="submit" name="submit" value="Delete"/>
+            </select>
+            {% endif %}
+            <p>
+               New Album Name: 
+               <input type="text" name="album_name"/>
+               <br />
+               <input type="submit" name="submit" value="Create"/>
+            </p>
+         </form>
+      </p>
+      {% if message %}
+      <h4>{{message}}!</h4>
+      {% endif %}
+   </div>
+   <div id="footer">
+      Copyright © 2016 Ang Li
+   </div>
+</body>
+</html>

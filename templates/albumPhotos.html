@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<title>Album Photos</title>
+<body>
+  <div id="header">
+    <h1><a id="title" href="/">Photo Share</a></h1>
+  </div>
+  <div id="nav">
+    <a id="navi" href='/'>Home</a><br>
+    <a id="navi" href='/profile'>My profile</a><br>
+    <a id="navi" href='/getAllFriends'>Friendship</a><br>
+    <a id="navi" href='/getAlbums'>Manage Albums</a><br>
+    <a id="navi" href='/browseByAlbum'>Browse Albums</a><br>
+    <a id="navi" href='/browseByTag'>Browse Tags</a><br>
+    <a id="navi" href='/recommend'>Recommendations</a><br>
+    <a id="navi" href='/stars'>Stars</a><br>
+    <a id="navi" href='/login'>Login</a><br>
+    <a id="navi" href='/logout'>Logout</a><br>
+  </div>
+  <h2>Upload photo to Album</h2>
+  <form method="POST" enctype="multipart/form-data" action="/upload">
+    {% if albumdata %}
+    <table>
+      <tr>
+        <th>
+          <input type="hidden" name="album_id" value="{{albumdata[0]}}">{{albumdata[1]}}<br />
+        </th>
+      </tr>
+      {% endif %}
+      <tr>
+        <th>
+          <label for="photo">Select photo:</label>
+        </th>
+        <td>
+          <input type="file" name="photo" required='true' /><br />
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <label for="caption">Add caption:</label>
+        </th>
+        <td>
+          <input type="text" name="caption" required='true' /><br />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" align="right">
+          <input type="submit" value="Upload" />
+        </td>
+      </tr>
+    </table>
+  </form>
+  {% if message %}
+  <h4>{{message}}!</h4>
+  {% endif %}
+  <h2>Album photos</h2>
+  <form method="POST" action="/getPhotoInfo">
+    {% if photos %}
+    
+      
+        <div style="float:left; width: 70%">
+        {% for photo in photos %}
+        <p>
+            <input type="radio" name="photo_id" value="{{photo[1]}}"/>
+            <input type="submit" name="submit" value="Detail"/>
+            <input type="submit" name="submit" value="Delete"/><br />
+            <img src='data:image/png;base64, {{photo[0]}}' alt="photo" height="350"/>
+          </p>
+                {% endfor %}
+        </div>
+
+  
+    {% endif %}
+  </form>
+</body>
+</html>

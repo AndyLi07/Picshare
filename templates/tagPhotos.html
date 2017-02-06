@@ -1,0 +1,70 @@
+<html>
+<head>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+	<title>Browse Photo</title>
+</head>
+<body>
+	<div id="header">
+		<h1><a id="title" href="/">Photo Share</a></h1>
+	</div>
+	<div id="nav">
+		<a id="navi" href='/'>Home</a><br>
+		<a id="navi" href='/profile'>My profile</a><br>
+		<a id="navi" href='/getAllFriends'>Friendship</a><br>
+		<a id="navi" href='/getAlbums'>Manage Albums</a><br>
+		<a id="navi" href='/browseByAlbum'>Browse Albums</a><br>
+		<a id="navi" href='/browseByTag'>Browse Tags</a><br>
+		<a id="navi" href='/recommend'>Recommendations</a><br>
+		<a id="navi" href='/stars'>Stars</a><br>
+		<a id="navi" href='/login'>Login</a><br>
+		<a id="navi" href='/logout'>Logout</a><br>
+	</div>
+
+	<div id="section">
+		<h2>Browse Photos By Tag</h2>
+		<form method="POST" action="/browseByTag">
+			{% if allTags %}
+			Select a tag: 
+			<select name="tag_id">
+				{% for tag in allTags %}
+				<option value="{{tag[0]}}">{{tag[1]}}</option>
+				{% endfor %}
+			</select>
+			<br />
+			<input type="radio" name="category" value="my" checked/> View My Photos<br />
+			<input type="radio" name="category" value="all"/> View All Photos<br />
+			
+			<input type="submit" name="submit" value="Browse"/>
+			{% endif %}
+		</form>
+
+		<p>
+		{% if popularTags %}
+		<h3>Top 5 tags on PhotoShare</h3>
+			{% for popularTag in popularTags %}
+			<a href="/browseByPopularTag/{{popularTag[0]}}"> {{popularTag[1]}} </a><br />
+			{% endfor %}
+		{% endif %}
+		</p>
+
+		{% if photos %}
+		<form method="POST" action="/getPhotoInfo">
+		{% for photo in photos %}
+		<div style="float:left; width: 100%"><p>
+			<img src='data:image/png;base64, {{photo[1]}}' alt="photo"  height="380"/><br />
+			<input type="radio" name="photo_id" value="{{photo[0]}}"/>
+            <input type="submit" name="submit" value="Detail"/><br />
+			Caption: {{photo[2]}}<br />
+			Album: {{photo[3]}}<br />
+			Author: {{photo[4]}} {{photo[5]}}<br />
+		</p>
+	</div>
+	{% endfor %}
+	</form>
+	{% endif %}
+
+	
+	
+</div>
+</body>
+</html>

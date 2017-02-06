@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+	<title>Log In</title>
+</head>
+<body>
+	<div id="header">
+		<h1><a id="title" href="/">Photo Share</a></h1>
+	</div>
+	<div id="nav">
+		<a id="navi" href='/'>Home</a><br>
+	</div>
+	<div id="section">
+	<h2>User Log In</h2>
+	{% if message %}
+      <h3>{{message}}!</h3>
+      {% endif %}
+		<form action='login' method='POST'>
+			<table>
+				<tr>
+					<td>
+						<input type='text' name='email' id='email' placeholder='email' required />
+					</td>
+					<td>
+						<input type='password' name='password' id='password' placeholder='password' required />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="right">
+						<input type='submit' name='submit' />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div id="footer">
+		Copyright © 2016 Ang Li
+	</div>
+</body>
+</html>

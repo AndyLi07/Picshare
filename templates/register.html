@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<head>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
+    <title>Create Account</title>
+</head>
+{%if not supress%}
+<h3> Email already in use! Use another email or <a href="/login">login</a></h3>
+{% endif %}
+<body>
+ <div id="header">
+    <h1><a id="title" href="/">Photo Share</a></h1>
+</div>
+<div id="nav">
+    <a id="navi" href='/'>Home</a><br>
+    <a id="navi" href='/profile'>My profile</a><br>
+    <a id="navi" href='/getAllFriends'>Friendship</a><br>
+    <a id="navi" href='/getAlbums'>Manage Albums</a><br>
+    <a id="navi" href='/browseByAlbum'>Browse Albums</a><br>
+    <a id="navi" href='/browseByTag'>Browse Tags</a><br>
+    <a id="navi" href='/recommend'>Recommendations</a><br>
+    <a id="navi" href='/stars'>Stars</a><br>
+    <a id="navi" href='/login'>Login</a><br>
+    <a id="navi" href='/logout'>Logout</a><br>
+</div>
+<div id="section">
+    <h2>Create your account</h2>
+    <form method="post" action="{{ url_for('register_user') }}">
+        <table>
+
+            <tr>
+                <th>
+                    <label for="firstName">First name </label>
+                </th>
+                <td>
+                    <input type="text" name="firstName" required/><br />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="lastName">Last name </label>
+                </th>
+                <td>
+                    <input type="text" name="lastName" required/><br />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="email">Email </label>
+                </th>
+                <td>
+                    <input type="email" name="email" required/><br />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="password">Password </label>
+                </th>
+                <td>
+                    <input type="password" name="password" required/><br />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="birthday">Birthday </label>
+                </th>
+                <td>
+                    <input type="date" name="birthday" required/><br />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="gender">Gender </label>
+                </th>
+                <td>
+                    <input type="radio" name="gender" value="M" checked> Male 
+                    <input type="radio" name="gender" value="F"> Female <br />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="hometown">Hometown </label>
+                </th>
+                <td>
+                    <input type="text" name="hometown" /><br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right">
+                    <input type="submit" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

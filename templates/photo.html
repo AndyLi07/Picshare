@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
+	<title>Photo Info</title>
+</head>
+<body>
+	<div id="header">
+		<h1><a id="title" href="/">Photo Share</a></h1>
+	</div>
+	<div id="nav">
+		<a id="navi" href='/'>Home</a><br>
+		<a id="navi" href='/profile'>My profile</a><br>
+		<a id="navi" href='/getAllFriends'>Friendship</a><br>
+		<a id="navi" href='/getAlbums'>Manage Albums</a><br>
+		<a id="navi" href='/browseByAlbum'>Browse Albums</a><br>
+		<a id="navi" href='/browseByTag'>Browse Tags</a><br>
+		<a id="navi" href='/recommend'>Recommendations</a><br>
+		<a id="navi" href='/stars'>Stars</a><br>
+		<a id="navi" href='/login'>Login</a><br>
+		<a id="navi" href='/logout'>Logout</a><br>
+	</div>
+	
+	<h2> Details of the photo </h2>
+	{% if message %}
+	<h4>{{message}}!</h4>
+	{% endif %}
+
+	<div id="section">
+		<form method="POST" action="/UpdatePhotoInfo">
+			{% if photos %}
+			{% for photo in photos %}
+			<div style="float:left; width: 100%">
+				<input type="hidden" name="photo_id" value="{{photo[0]}}"><br />
+				<img src='data:image/png;base64, {{photo[1]}}' alt="photo"  height="380"/><br />
+				Caption: {{photo[2]}}<br />
+				<input type="hidden" name="album_id" value="{{photo[3]}}"><br />
+				<input type="hidden" name="owner_id" value="{{photo[4]}}"><br />
+			</div>
+			{% endfor %}
+			{% endif %}
+
+			<div style="float:left;">
+				{% if tags %}
+				<p>
+					Tags of this photo: <br/>
+					{% for tag in tags %}
+					{{tag[1]}}&nbsp&nbsp&nbsp&nbsp		
+					{% endfor %}
+				</p>
+				{% endif %}
+				
+
+				{% if ownPhoto %}
+				<p>
+					Input some tags: <br />
+					<input type="text" name="tags_word">
+					<input type="submit" name="submit" value="Get Recommend List"/><br />
+					{% if recommendTags %}
+					Some Recommended Tags:<br />
+					<ul>
+						{% for recommendTag in recommendTags %}
+						<li>{{recommendTag[1]}}</li>
+						{% endfor %}
+					</ul>
+					{% endif %}
+					<input type="text" name="tagToAdd" placeholder="Tags">
+					<input type="submit" name="submit" value="Add"/>
+				</p>
+				{% endif %}
+				{% if not ownPhoto %}
+				<p>
+					
+					<input type="text" name="comment" placeholder="Comment">
+					<input type="submit" name="submit" value="Post"/>
+				</p>
+				{% endif %}
+				{% if comments %}
+
+				<ul style="list-style-type:square">
+					{% for comment in comments %}
+					<li>
+						Comment: {{comment[1]}} <br />
+						By: {{comment[3]}} {{comment[4]}} on: {{comment[2]}} <br />
+					</li>
+					<br />
+					{% endfor %}
+				</ul>
+				{% endif %}
+
+				<input type="submit" name="submit" value="Like"/><br />
+				{% if likeCount %}
+				{{likeCount}} users like this photo!<br />
+				{% endif %}
+				
+				{% if likes %}
+				Users that like this photo:
+				<ul style="list-style-type:square">
+					{% for like in likes %}
+					<li>{{like[0]}} {{like[1]}}</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</div>
+		</form>
+		
+	</div>
+</body>
+</html>

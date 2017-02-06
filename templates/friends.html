@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+	<title>Friends</title>
+</head>
+<body>
+	<div id="header">
+		<h1><a id="title" href="/">Photo Share</a></h1>
+	</div>
+	<div id="nav">
+		<a id="navi" href='/'>Home</a><br>
+		<a id="navi" href='/profile'>My profile</a><br>
+		<a id="navi" href='/getAllFriends'>Friendship</a><br>
+		<a id="navi" href='/getAlbums'>Manage Albums</a><br>
+		<a id="navi" href='/browseByAlbum'>Browse Albums</a><br>
+		<a id="navi" href='/browseByTag'>Browse Tags</a><br>
+		<a id="navi" href='/recommend'>Recommendations</a><br>
+		<a id="navi" href='/stars'>Stars</a><br>
+		<a id="navi" href='/login'>Login</a><br>
+		<a id="navi" href='/logout'>Logout</a><br>
+	</div>
+	<div id="section">
+		<h2>My Friends List</h2>
+		<p>
+			{% if frienddatas %}
+			<form action="/getAllFriends" method = "POST">
+				<select name="delete_to_friend_id" style="width: 150px;">
+				{% for frienddata in frienddatas %}
+				<option value="{{frienddata[0]}}">{{frienddata[1]}}  {{frienddata[2]}}</option>
+				{% endfor %}
+				<br />
+					<input type="submit" name="submit" value="Delete"/>
+				</select>
+			</form>
+			{% endif %}
+		</p>
+		<h2>Find friends</h2>
+		<p>
+			{% if unfrienddatas %}
+			<form action="/getAllFriends" method = "POST">
+				<select name="to_friend_id" style="width: 150px;">
+					{% for unfrienddata in unfrienddatas%}
+					<option value="{{unfrienddata[0]}}">{{unfrienddata[1]}}  {{unfrienddata[2]}}</option>
+					{% endfor %}
+					<br />
+					<input type="submit" name="submit" value="Add"/>
+				</select>
+			</form>
+			{% endif %}
+			{% if error %}
+			<p>{{ error }}</p>
+			{% endif %}
+		</p> 
+	</div>
+	<div id="footer">
+		Copyright © 2016 Ang Li
+	</div>
+</body>
+</html>
